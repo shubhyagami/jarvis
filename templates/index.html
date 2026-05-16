@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J.A.R.V.I.S. - AI Assistant</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Share Tech Mono', monospace;
+    background: #05050a;
+    color: #c0e0ff;
+    height: 100vh; display: flex; flex-direction: column;
+    overflow: hidden; position: relative;
+  }
+
+  /* Neural network canvas */
+  #neuralCanvas {
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Scanline overlay */
+  body::after {
+    content: ''; position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px);
+    pointer-events: none; z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    position: relative; z-index: 3;
+    padding: 12px 24px;
+    background: rgba(5, 5, 10, 0.85);
+    border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    backdrop-filter: blur(8px);
+  }
+  .header::after {
+    content: ''; position: absolute; bottom: -1px; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,240,255,0.5), transparent);
+    animation: hdrGlow 3s ease-in-out infinite;
+  }
+  @keyframes hdrGlow { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  .header .logo {
+    width: 26px; height: 26px;
+    border: 1.5px solid #00f0ff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: bold; color: #00f0ff;
+    box-shadow: 0 0 10px rgba(0,240,255,0.3);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 10px rgba(0,240,255,0.3); } 50% { box-shadow: 0 0 20px rgba(0,240,255,0.5); } }
+
+  .header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px; font-weight: 700; letter-spacing: 4px;
+    background: linear-gradient(90deg, #00f0ff, #ff00aa);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+  }
+  .status-dot {
+    width: 5px; height: 5px; border-radius: 50%; background: #00f0ff;
+    box-shadow: 0 0 8px rgba(0,240,255,0.8);
+    animation: blink 1.5s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0.2; } }
+
+  /* Chat container */
+  .chat-container {
+    position: relative; z-index: 3;
+    flex: 1; overflow-y: auto; padding: 16px 20px;
+    display: flex; flex-direction: column; gap: 12px;
+    max-width: 800px; margin: 0 auto; width: 100%;
+    scroll-behavior: smooth;
+  }
+  .chat-container::-webkit-scrollbar { width: 3px; }
+  .chat-container::-webkit-scrollbar-track { background: transparent; }
+  .chat-container::-webkit-scrollbar-thumb { background: rgba(0,240,255,0.2); border-radius: 2px; }
+
+  /* Messages */
+  .message {
+    max-width: 84%; padding: 10px 16px;
+    line-height: 1.5; white-space: pre-wrap; word-wrap: break-word;
+    position: relative; opacity: 0; animation: fadeInMsg 0.3s ease forwards;
+  }
+  @keyframes fadeInMsg { to { opacity: 1; } }
+  .user {
+    align-self: flex-end;
+    background: rgba(0, 240, 255, 0.06);
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    color: #70e0ff;
+    border-radius: 4px 14px 4px 14px;
+  }
+  .user::before { content: '> '; color: #00f0ff; opacity: 0.5; }
+  .assistant {
+    align-self: flex-start;
+    background: rgba(255, 0, 170, 0.04);
+    border: 1px solid rgba(255, 0, 170, 0.12);
+    color: #d0c8ff;
+    border-radius: 14px 4px 14px 4px;
+  }
+  .assistant::before {
+    content: 'J.A.R.V.I.S. ── ';
+    font-size: 10px; color: #ff00aa; opacity: 0.6;
+    display: block; margin-bottom: 3px;
+    font-family: 'Orbitron', sans-serif; letter-spacing: 1px;
+  }
+  .assistant.streaming {
+    border-color: rgba(0, 240, 255, 0.3);
+  }
+  .assistant.streaming::after {
+    content: '▊'; animation: cursorBlink 0.8s step-end infinite;
+    color: #00f0ff; margin-left: 2px;
+  }
+  @keyframes cursorBlink { 50% { opacity: 0; } }
+
+  /* Code blocks */
+  .code-block-wrap {
+    margin: 8px 0;
+    border: 1px solid rgba(0, 240, 255, 0.12);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .code-block-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 12px;
+    background: rgba(0, 240, 255, 0.04);
+    border-bottom: 1px solid rgba(0, 240, 255, 0.08);
+    font-size: 10px; font-family: 'Orbitron', sans-serif;
+    color: rgba(0, 240, 255, 0.5); letter-spacing: 1px;
+  }
+  .code-block-dots {
+    display: flex; gap: 4px;
+  }
+  .code-block-dots span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(0, 240, 255, 0.2);
+  }
+  .code-block-dots span:nth-child(1) { background: rgba(255, 80, 80, 0.6); }
+  .code-block-dots span:nth-child(2) { background: rgba(255, 200, 50, 0.6); }
+  .code-block-dots span:nth-child(3) { background: rgba(80, 220, 80, 0.6); }
+  .code-lang {
+    margin-left: auto; font-size: 9px; opacity: 0.5;
+  }
+  .message pre {
+    background: rgba(0, 240, 255, 0.02);
+    padding: 10px 14px; margin: 0;
+    overflow-x: auto; font-size: 12px;
+    font-family: 'Share Tech Mono', monospace;
+    color: #a0d8ff; line-height: 1.6;
+    white-space: pre;
+  }
+  .message pre code {
+    background: none; padding: 0; border-radius: 0;
+    font-size: 12px; color: #a0d8ff;
+  }
+  /* typing cursor inside code */
+  .code-cursor::after {
+    content: '▊';
+    animation: cursorBlink 0.8s step-end infinite;
+    color: #00f0ff;
+  }
+  .message code {
+    background: rgba(0, 240, 255, 0.08);
+    padding: 1px 5px; border-radius: 3px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px; color: #70e0ff;
+  }
+  .message pre code {
+    background: none; padding: 0; border-radius: 0;
+    font-size: 12px; color: #a0d8ff;
+  }
+
+  /* Input area */
+  .input-area {
+    position: relative; z-index: 3;
+    padding: 12px 20px;
+    background: rgba(5, 5, 10, 0.85);
+    border-top: 1px solid rgba(0, 240, 255, 0.1);
+    backdrop-filter: blur(8px);
+  }
+  .input-area::before {
+    content: ''; position: absolute; top: -1px; left: 15%; right: 15%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,240,255,0.2), transparent);
+  }
+  .input-row { max-width: 800px; margin: 0 auto; display: flex; gap: 8px; align-items: flex-end; }
+  .input-row textarea {
+    flex: 1; padding: 10px 14px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    background: rgba(0, 240, 255, 0.02);
+    color: #b0d8ff;
+    font-size: 13px; font-family: 'Share Tech Mono', monospace;
+    resize: none; outline: none;
+    transition: border-color 0.3s;
+  }
+  .input-row textarea:focus { border-color: #00f0ff; box-shadow: 0 0 12px rgba(0,240,255,0.08); }
+  .input-row textarea::placeholder { color: rgba(176, 216, 255, 0.15); }
+  .input-row button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: 1px solid #00f0ff;
+    background: transparent;
+    color: #00f0ff;
+    font-size: 12px; font-family: 'Orbitron', sans-serif; letter-spacing: 2px;
+    cursor: pointer; text-transform: uppercase;
+    transition: all 0.3s;
+  }
+  .input-row button:hover {
+    background: rgba(0, 240, 255, 0.08);
+    box-shadow: 0 0 18px rgba(0,240,255,0.15);
+  }
+  .input-row button:disabled { opacity: 0.25; cursor: not-allowed; box-shadow: none; }
+  .new-chat { margin-top: 6px; text-align: center; }
+  .new-chat button {
+    background: none; border: none;
+    color: rgba(0, 240, 255, 0.2);
+    font-family: 'Share Tech Mono', monospace; font-size: 11px;
+    cursor: pointer; transition: color 0.3s; letter-spacing: 1px;
+  }
+  .new-chat button:hover { color: #00f0ff; }
+
+  /* Loading dots */
+  .loading-dots { display: inline-flex; gap: 4px; align-items: center; }
+  .loading-dots span {
+    width: 5px; height: 5px; border-radius: 50%; background: #ff00aa;
+    animation: dotBounce 1.4s ease-in-out infinite;
+  }
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dotBounce { 0%,80%,100% { transform: scale(0.4); opacity: 0.3; } 40% { transform: scale(1); opacity: 1; } }
+
+  /* Glitch */
+  .glitch { position: relative; }
+  .glitch::before, .glitch::after {
+    content: attr(data-text); position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+  }
+  .glitch::before { color: #00f0ff; z-index: -1; animation: glitch1 3s infinite; }
+  .glitch::after { color: #ff00aa; z-index: -1; animation: glitch2 3s infinite; }
+  @keyframes glitch1 {
+    0%,5%,100% { transform: translate(0); }
+    1% { transform: translate(-1px, 1px); }
+    2% { transform: translate(1px, -1px); }
+    3% { transform: translate(-1px, 0); }
+  }
+  @keyframes glitch2 {
+    0%,5%,100% { transform: translate(0); }
+    1% { transform: translate(1px, -1px); }
+    2% { transform: translate(-1px, 1px); }
+    3% { transform: translate(1px, 0); }
+  }
+</style>
+</head>
+<body>
+<canvas id="neuralCanvas"></canvas>
+
+<div class="header">
+  <div class="logo">J</div>
+  <h1 class="glitch" data-text="J.A.R.V.I.S">J.A.R.V.I.S</h1>
+  <div class="status-dot"></div>
+</div>
+
+<div class="chat-container" id="chatContainer">
+  <div class="message assistant" id="greetingMsg">
+    <div class="loading-dots"><span></span><span></span><span></span></div>
+  </div>
+</div>
+
+<div class="input-area">
+  <div class="input-row">
+    <textarea id="input" rows="1" placeholder="Enter command, Sir..." maxlength="10000"></textarea>
+    <button id="sendBtn" onclick="sendMessage()">Send</button>
+  </div>
+  <div class="new-chat"><button onclick="newChat()">[ New Session ]</button></div>
+</div>
+
+<script>
+// ── Neural Network Animation ──────────────────────────────────────────
+const canvas = document.getElementById('neuralCanvas');
+const ctx = canvas.getContext('2d');
+let W, H, nodes = [], connections = [], signals = [];
+let activity = 0; // 0-1, how active the network is
+let targetActivity = 0;
+let frame = 0;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  initNetwork();
+}
+
+function initNetwork() {
+  nodes = []; connections = []; signals = [];
+  const count = Math.min(60, Math.floor(W * H / 18000));
+  for (let i = 0; i < count; i++) {
+    const col = i % 8;
+    const row = Math.floor(i / 8);
+    const spacingX = W / 9;
+    const spacingY = H / ((count / 8) + 1);
+    nodes.push({
+      x: spacingX * (col + 1) + (Math.random() - 0.5) * spacingX * 0.4,
+      y: spacingY * (row + 1) + (Math.random() - 0.5) * spacingY * 0.4,
+      vx: 0, vy: 0,
+      radius: 1.5 + Math.random() * 1.5,
+      phase: Math.random() * Math.PI * 2,
+      brightness: 0,
+      pulse: 0
+    });
+  }
+  // Connect nearby nodes
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const maxDist = Math.min(W, H) * 0.22;
+      if (dist < maxDist) {
+        connections.push({ from: i, to: j, dist, opacity: 0.1 + Math.random() * 0.2 });
+      }
+    }
+  }
+}
+
+function spawnSignal() {
+  if (connections.length === 0) return;
+  const c = connections[Math.floor(Math.random() * connections.length)];
+  signals.push({
+    from: c.from, to: c.to,
+    progress: 0,
+    speed: 0.008 + Math.random() * 0.012,
+    trail: []
+  });
+}
+
+function updateNetwork() {
+  frame++;
+  activity += (targetActivity - activity) * 0.05;
+
+  // Idle pulsing
+  const idlePulse = 0.15 + 0.08 * Math.sin(frame * 0.008);
+
+  // Spawn signals based on activity
+  if (activity > 0.1 && Math.random() < activity * 0.15) {
+    spawnSignal();
+  }
+  if (activity > 0.5 && Math.random() < activity * 0.08) {
+    spawnSignal();
+  }
+
+  // Update signals
+  for (let s = signals.length - 1; s >= 0; s--) {
+    const sig = signals[s];
+    sig.progress += sig.speed * (0.8 + activity * 0.4);
+    if (sig.progress >= 1) {
+      // Spawn next signal
+      const nextCons = connections.filter(c => c.from === sig.to || c.to === sig.to);
+      if (nextCons.length > 0 && Math.random() < 0.5) {
+        const nc = nextCons[Math.floor(Math.random() * nextCons.length)];
+        signals.push({
+          from: sig.to,
+          to: nc.from === sig.to ? nc.to : nc.from,
+          progress: 0,
+          speed: sig.speed * (0.7 + Math.random() * 0.3),
+          trail: []
+        });
+      }
+      signals.splice(s, 1);
+    }
+  }
+
+  // Update node pulses from signals
+  nodes.forEach(n => { n.pulse *= 0.92; n.brightness *= 0.97; });
+  for (const sig of signals) {
+    if (sig.progress < 0.3) {
+      nodes[sig.from].pulse = Math.max(nodes[sig.from].pulse, 1 - sig.progress / 0.3);
+      nodes[sig.from].brightness = Math.max(nodes[sig.from].brightness, 0.8);
+    }
+    if (sig.progress > 0.7) {
+      nodes[sig.to].pulse = Math.max(nodes[sig.to].pulse, (sig.progress - 0.7) / 0.3);
+      nodes[sig.to].brightness = Math.max(nodes[sig.to].brightness, 0.8);
+    }
+  }
+}
+
+function drawNetwork() {
+  ctx.clearRect(0, 0, W, H);
+
+  const idlePulse = 0.15 + 0.08 * Math.sin(frame * 0.008);
+
+  // Draw connections
+  for (const c of connections) {
+    const from = nodes[c.from];
+    const to = nodes[c.to];
+    const avg = (from.pulse + to.pulse) / 2;
+    const alpha = (c.opacity + avg * 0.6) * (0.3 + activity * 0.7);
+    if (alpha < 0.02) continue;
+    ctx.beginPath();
+    ctx.moveTo(from.x, from.y);
+    ctx.lineTo(to.x, to.y);
+    ctx.strokeStyle = `rgba(0, 240, 255, ${alpha})`;
+    ctx.lineWidth = 0.5 + avg * 1.5;
+    ctx.stroke();
+  }
+
+  // Draw signals
+  for (const sig of signals) {
+    const from = nodes[sig.from];
+    const to = nodes[sig.to];
+    const x = from.x + (to.x - from.x) * sig.progress;
+    const y = from.y + (to.y - from.y) * sig.progress;
+    const glow = 8 + activity * 12;
+
+    // Glow
+    const grad = ctx.createRadialGradient(x, y, 0, x, y, glow);
+    grad.addColorStop(0, `rgba(0, 240, 255, ${0.5 + activity * 0.5})`);
+    grad.addColorStop(0.4, `rgba(0, 240, 255, ${0.15 + activity * 0.15})`);
+    grad.addColorStop(1, 'rgba(0, 240, 255, 0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(x - glow, y - glow, glow * 2, glow * 2);
+
+    // Core
+    ctx.beginPath();
+    ctx.arc(x, y, 1.5 + activity * 1.5, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(200, 255, 255, ${0.8 + activity * 0.2})`;
+    ctx.fill();
+  }
+
+  // Draw nodes
+  for (const node of nodes) {
+    const idle = idlePulse * (0.8 + 0.2 * Math.sin(frame * 0.005 + node.phase));
+    const bright = Math.max(idle, node.brightness * 0.6);
+    const r = node.radius * (1 + node.pulse * 0.8);
+    const alpha = 0.15 + bright * 0.7;
+
+    // Glow
+    const g = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, r * 4);
+    g.addColorStop(0, `rgba(0, 240, 255, ${alpha * 0.4})`);
+    g.addColorStop(1, 'rgba(0, 240, 255, 0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(node.x - r * 4, node.y - r * 4, r * 8, r * 8);
+
+    // Core
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(180, 240, 255, ${0.3 + bright * 0.7})`;
+    ctx.fill();
+  }
+}
+
+function animate() {
+  updateNetwork();
+  drawNetwork();
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize', resize);
+resize();
+animate();
+
+// ── Chat ──────────────────────────────────────────────────────────────
+let history = [];
+const container = document.getElementById('chatContainer');
+const input = document.getElementById('input');
+const sendBtn = document.getElementById('sendBtn');
+let streaming = false;
+let greetingLoaded = false;
+
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+input.addEventListener('input', () => {
+  input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 150) + 'px';
+});
+
+function renderMarkdown(text) {
+  // extract and protect code blocks
+  const codeBlocks = [];
+  let raw = text.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) => {
+    const i = codeBlocks.length;
+    codeBlocks.push({ lang, code });
+    return `%%CB${i}%%`;
+  });
+  // escape HTML in remaining text
+  let html = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  // inline code
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // bold/italic
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  // newlines to <br> (outside code blocks — placeholders have none)
+  html = html.replace(/\n/g, '<br>');
+  // restore code blocks (pre preserves \n natively)
+  html = html.replace(/%%CB(\d+)%%/g, (_, i) => {
+    const b = codeBlocks[+i];
+    if (!b) return '%%CB' + i + '%%';
+    const esc = b.code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const langTag = b.lang ? `<span class="code-lang">${b.lang}</span>` : '';
+    return `<div class="code-block-wrap"><div class="code-block-header"><div class="code-block-dots"><span></span><span></span><span></span></div>TERMINAL${langTag}</div><pre><code class="code-typed">${esc}</code></pre></div>`;
+  });
+  return html;
+}
+
+function addMessage(role, content, asHtml) {
+  const div = document.createElement('div');
+  div.className = 'message ' + role;
+  if (asHtml) div.innerHTML = content;
+  else div.textContent = content;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return div;
+}
+
+function animateCodeBlocks(root) {
+  const blocks = root.querySelectorAll('code.code-typed');
+  let delay = 0;
+  blocks.forEach((codeEl) => {
+    const text = codeEl.textContent;
+    codeEl.textContent = '';
+    codeEl.classList.add('code-cursor');
+    let i = 0;
+    function typeChar() {
+      if (i < text.length) {
+        codeEl.textContent += text[i];
+        i++;
+        container.scrollTop = container.scrollHeight;
+        setTimeout(typeChar, 8 + (text[i-1] === '\n' ? 30 : 0));
+      } else {
+        codeEl.classList.remove('code-cursor');
+        codeEl.textContent = text;
+      }
+    }
+    setTimeout(typeChar, delay);
+    delay += Math.min(text.length * 6, 2000);
+  });
+}
+
+function typeText(el, text, speed, callback) {
+  let i = 0;
+  el.textContent = '';
+  function tick() {
+    if (i < text.length) {
+      el.textContent += text[i];
+      i++;
+      container.scrollTop = container.scrollHeight;
+      setTimeout(tick, speed);
+    } else if (callback) callback();
+  }
+  tick();
+}
+
+async function loadGreeting() {
+  const el = document.getElementById('greetingMsg');
+  try {
+    const res = await fetch('/api/greeting');
+    const data = await res.json();
+    const greeting = data.greeting || 'Good day, Sir. J.A.R.V.I.S. at your service.';
+    el.innerHTML = '';
+    el.style.opacity = '1';
+    typeText(el, greeting, 18, () => { greetingLoaded = true; input.focus(); });
+  } catch {
+    const fallback = 'Good day, Sir. J.A.R.V.I.S. at your service.';
+    el.innerHTML = '';
+    el.style.opacity = '1';
+    typeText(el, fallback, 18, () => { greetingLoaded = true; input.focus(); });
+  }
+}
+
+async function sendMessage() {
+  const text = input.value.trim();
+  if (!text || streaming) return;
+  input.value = ''; input.style.height = 'auto';
+  streaming = true;
+  sendBtn.disabled = true;
+  targetActivity = 1;
+
+  addMessage('user', text);
+  const assistantDiv = addMessage('assistant streaming', '', false);
+  assistantDiv.textContent = '';
+
+  const body = JSON.stringify({ message: text, history: [...history] });
+
+  try {
+    const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body });
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let fullReply = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n\n');
+      buffer = lines.pop() || '';
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const data = line.slice(6);
+          if (data === '[DONE]') continue;
+          fullReply += data;
+          assistantDiv.innerHTML = fullReply.replace(/\n/g, '<br>').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          container.scrollTop = container.scrollHeight;
+        }
+      }
+    }
+    history.push(text, fullReply);
+    assistantDiv.className = 'message assistant';
+    try {
+      assistantDiv.innerHTML = renderMarkdown(fullReply);
+      animateCodeBlocks(assistantDiv);
+    } catch (_) {
+      assistantDiv.textContent = fullReply;
+    }
+  } catch (e) {
+    assistantDiv.textContent = '! SYSTEM ERROR: ' + e.message;
+    assistantDiv.className = 'message assistant';
+  }
+  streaming = false;
+  sendBtn.disabled = false;
+  targetActivity = 0;
+  input.focus();
+}
+
+function newChat() {
+  history = [];
+  container.querySelectorAll('.message').forEach(el => {
+    if (el.id !== 'greetingMsg') el.remove();
+  });
+  const greetingEl = document.getElementById('greetingMsg');
+  if (!greetingEl) {
+    const div = document.createElement('div');
+    div.className = 'message assistant';
+    div.id = 'greetingMsg';
+    div.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
+    container.insertBefore(div, container.firstChild);
+  } else {
+    greetingEl.style.display = '';
+    greetingEl.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
+  }
+  greetingLoaded = false;
+  loadGreeting();
+  input.focus();
+}
+
+loadGreeting();
+</script>
+</body>
+</html>
