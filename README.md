@@ -9,7 +9,6 @@
 ║   ██▄▄▀  ██ ██ ██ ██ ██ ██ ██ ██ ██ ██ ██ ██ ██ ██ ██ ██   ║
 ║   ▀▀▀▀   ▀▀ ▀▀ ▀▀ ▀▀ ▀▀ ▀▀ ▀▀ ▀▀▀▀  ▀▀ ▀▀ ▀▀ ▀▀▀▀ ▀▀ ▀▀   ║
 ╚══════════════════════════════════════════════════════════════╝
-```
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
@@ -76,12 +75,28 @@ That’s it. No dependencies, no npm install, no Docker. The future is a single 
 
 ## 🧠 Did You Know?
 
-- The original J.A.R.V.I.S. stood for **Just A Rather Very Intelligent System** – this one is just a rather very *simple* system… for now.
-- This project contains exactly **zero** lines of server‑side code – it’s all client magic.
-- The speech recognition works offline in Chrome/Edge, but for best results, stay connected to the internet.
-- If you type `jarvis help` in the console, a hidden debug mode unlocks.
+- The original J.A.R.V.I.S. stood for **Just A Rather Very Intelligent System** – this one is just a rather very *simple* system that gets the job done.
 
 ---
 
-**Last Updated:** 2026-07-25  
-**Maintained by** [shubhyagami](https://github.com/shubhyagami) · **Part of the TVA Temporal Repository Network** 🕰️
+## 💡 Pro Tips
+
+- **Wake Word Customization** – Change the wake word from "Jarvis" to anything you like by editing the `wakeWord` variable in `script.js`.  
+- **Voice Feedback Toggle** – Want silent responses? Set `speakResponses = false` in the config to disable audio output.  
+- **Quick Command Shortcuts** – Type commands directly in the console while the UI is open for debugging without speaking.  
+- **Theme Switching** – Replace the CSS `--primary-color` variable with your favourite hex code to match your workspace vibe.  
+- **Offline Mode** – All core functions work offline; only weather and search require an internet connection.
+
+---
+
+## 📅 Changelog – 2026-07-26
+
+- **New**: Added this Pro Tips section and changelog entry.  
+- **Improved**: Enhanced error handling for unsupported browsers – now shows a friendly message instead of breaking.  
+- **Fixed**: Microphone permission prompt now appears only once per session.  
+- **Added**: New `time` command speaks the current date and time in a natural tone.
+
+---
+
+> *"Sometimes the best assistant is the one you build yourself."*  
+> — Tony Stark (probably)
