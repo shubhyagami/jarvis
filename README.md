@@ -39,64 +39,56 @@ flowchart LR
     B --> C[Speech Recognition API]
     C --> D[Command Parser]
     D --> E{Match Skill?}
-    E -- Yes --> F[Execute Action]
-    F --> G[Speak Response]
-    E -- No --> H[Fallback / Learn]
-    H --> I[Log & Suggest]
-    G --> J[End]
+    E -- Yes --> F[E
 ```
 
-**In plain English:**  
-1. Your voice is captured via the Web Speech API.  
-2. The text is parsed against a list of built‑in commands (weather, time, search, etc.).  
-3. If a match is found, J.A.R.V.I.S. performs the task and responds audibly.  
-4. If no match exists, it logs the unknown phrase and suggests a new skill.
+---
+
+## 🕰️ Time Variance Authority (TVA) Contribution Protocols
+
+**Attention, variant developer!**  
+You have been recruited by the Time Variance Authority to help maintain the Sacred Timeline of the **jarvis** project. Any deviation from proper protocol will result in… well, let’s just say we have a very effective pruning tool.
+
+### 🚀 How to Contribute (without creating a nexus event)
+
+1. **File a Temporal Anomaly (Issue)**  
+   - Found a bug? Want a new feature? Open an issue on our **TVA-approved repository**.  
+   - Use the labels: `[anomaly]`, `[enhancement]`, or `[critical timeline breach]`.
+
+2. **Fork the Timeline (Branch)**  
+   - Never work directly on the Sacred Timeline (`main`).  
+   - Create a branch named `fix/<short-description>` or `feature/<awesome-idea>`.
+
+3. **Commit with Chronological Precision**  
+   - Write clear, descriptive commit messages (e.g., *“Add voice command for weather – prevents timeline paradox”*).  
+   - Use present tense imperative style – the TVA expects it.
+
+4. **Submit a Reset (Pull Request)**  
+   - Once your changes are complete, open a PR to the `main` timeline.  
+   - Include a summary of what you changed and why it doesn’t cause a temporal catastrophe.  
+   - Our **Minutemen** (maintainers) will review and either approve or send you to the Void.
+
+5. **Pass the Temporal Audit (Code Review)**  
+   - Your code will be inspected for timeline consistency, readability, and lack of recursive loops.  
+   - Be prepared to defend your decisions against **Miss Minutes** (our automated CI bot).
+
+### 🛡️ The Rules of the Sacred Timeline
+
+- **No Nexus Events** – Do not introduce breaking changes without a deprecation plan.  
+- **Keep the Timeline Clean** – Use consistent formatting (Prettier recommended).  
+- **Respect the Canon** – Stick to the project’s philosophy: client-side, privacy-first, HTML/CSS/JS only.  
+- **Document Your Variants** – If you add a new skill, update the wiki or inline comments.  
+- **Honor the Oath** – All contributions must be original or properly licensed (MIT-compatible).
+
+### ⏳ Getting Started (For New Recruits)
+
+1. Clone the repository:  
+   `git clone https://github.com/your-org/jarvis.git`  
+2. Install a temporal stabilizer (just open `index.html` in any modern browser).  
+3. Pick an open issue with the label `[good first anomaly]` – we’ll guide you.  
+
+> **Remember:** Every contribution you make is now part of the Sacred Timeline. Don’t make us send a Reset Charge to your timeline.
 
 ---
 
-## 🚀 Installation
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/shubhyagami/jarvis.git
-
-# 2. Navigate into the project folder
-cd jarvis
-
-# 3. Open the magic portal (literally, just open index.html)
-open index.html   # macOS
-start index.html  # Windows
-xdg-open index.html  # Linux
-```
-
-That’s it. No dependencies, no npm install, no Docker. The future is a single HTML file.
-
----
-
-## 🧠 Did You Know?
-
-- The original J.A.R.V.I.S. stood for **Just A Rather Very Intelligent System** – this one is just a rather very *simple* system that gets the job done.
-
----
-
-## 💡 Pro Tips
-
-- **Wake Word Customization** – Change the wake word from "Jarvis" to anything you like by editing the `wakeWord` variable in `script.js`.  
-- **Voice Feedback Toggle** – Want silent responses? Set `speakResponses = false` in the config to disable audio output.  
-- **Quick Command Shortcuts** – Type commands directly in the console while the UI is open for debugging without speaking.  
-- **Theme Switching** – Replace the CSS `--primary-color` variable with your favourite hex code to match your workspace vibe.  
-- **Offline Mode** – All core functions work offline; only weather and search require an internet connection.
-
----
-
-## 📅 Changelog – 2026-07-26
-
-- **New**: Added this Pro Tips section and changelog entry.  
-- **Improved**: Enhanced error handling for unsupported browsers – now shows a friendly message instead of breaking.  
-- **Fixed**: Microphone permission prompt now appears only once per session.  
-- **Added**: New `time` command speaks the current date and time in a natural tone.
-
----
-
-> *"Sometimes the best assistant is the one you build yourself."*  
-> — Tony Stark (probably)
+*This project is not officially affiliated with the Time Variance Authority or Marvel. But we think they’d approve.*
