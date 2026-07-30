@@ -61,34 +61,52 @@ You have been recruited by the Time Variance Authority to help maintain the Sacr
 
 3. **Commit with Chronological Precision**  
    - Write clear, descriptive commit messages (e.g., *“Add voice command for weather – prevents timeline paradox”*).  
-   - Use present tense imperative style – the TVA expects it.
-
-4. **Submit a Reset (Pull Request)**  
-   - Once your changes are complete, open a PR to the `main` timeline.  
-   - Include a summary of what you changed and why it doesn’t cause a temporal catastrophe.  
-   - Our **Minutemen** (maintainers) will review and either approve or send you to the Void.
-
-5. **Pass the Temporal Audit (Code Review)**  
-   - Your code will be inspected for timeline consistency, readability, and lack of recursive loops.  
-   - Be prepared to defend your decisions against **Miss Minutes** (our automated CI bot).
-
-### 🛡️ The Rules of the Sacred Timeline
-
-- **No Nexus Events** – Do not introduce breaking changes without a deprecation plan.  
-- **Keep the Timeline Clean** – Use consistent formatting (Prettier recommended).  
-- **Respect the Canon** – Stick to the project’s philosophy: client-side, privacy-first, HTML/CSS/JS only.  
-- **Document Your Variants** – If you add a new skill, update the wiki or inline comments.  
-- **Honor the Oath** – All contributions must be original or properly licensed (MIT-compatible).
-
-### ⏳ Getting Started (For New Recruits)
-
-1. Clone the repository:  
-   `git clone https://github.com/your-org/jarvis.git`  
-2. Install a temporal stabilizer (just open `index.html` in any modern browser).  
-3. Pick an open issue with the label `[good first anomaly]` – we’ll guide you.  
-
-> **Remember:** Every contribution you make is now part of the Sacred Timeline. Don’t make us send a Reset Charge to your timeline.
+   - Use present tense imperative style – the
 
 ---
 
-*This project is not officially affiliated with the Time Variance Authority or Marvel. But we think they’d approve.*
+## 🚀 Quick Start
+
+Get J.A.R.V.I.S. running in under 60 seconds:
+
+1. **Clone the repository**  
+   ```bash
+   git clone https://github.com/shubhyagami/jarvis.git
+   cd jarvis
+   ```
+
+2. **Open the main file**  
+   Double-click `index.html` or serve it locally (e.g., `python -m http.server`).
+
+3. **Grant microphone access**  
+   Your browser will ask for permission – click **Allow**. This is how J.A.R.V.I.S. hears you.
+
+4. **Speak the wake word**  
+   Say *“Jarvis”* followed by your command (e.g., *“Jarvis, what’s the weather?”*). Watch the interface glow and respond.
+
+> No dependencies, no build tools, no server required – just pure HTML/JS magic.
+
+---
+
+## 💡 Pro Tips
+
+- **Customise the wake word** – Open `js/config.js` and change the `wakeWord` variable to anything you like (e.g., “Friday”, “Karen”, “Computer”).
+- **Add your own skills** – Drop a new JavaScript file into the `skills/` folder following the existing pattern. J.A.R.V.I.S. automatically loads it on the next page refresh.
+- **Tweak the visual theme** – Edit `css/style.css` to adjust the neon glow colours, font sizes, or animation speeds. Make it your own.
+- **Use voice shortcuts** – For frequent tasks, map a short phrase to a complex action inside the skill parser. Example: *“Jarvis, good morning”* could open your calendar and read the news.
+- **Test offline** – All speech recognition and processing happens locally. You can disconnect from the internet after the initial load – J.A.R.V.I.S. still works.
+
+---
+
+## 📅 Changelog
+
+### 2026-07-31 – Temporal Enhancement Patch
+
+- Added **Quick Start** guide for instant setup.
+- Added **Pro Tips** section to help you customise like a true Stark.
+- Refined TVA contribution protocols with clearer branch naming.
+- Improved README formatting and added missing badges.
+
+---
+
+*Maintained by the TVA – because some timelines are too important to prune.*
