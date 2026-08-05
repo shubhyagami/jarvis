@@ -66,51 +66,39 @@ Every command follows a clean pipeline: **Listen → Parse → Match → Execute
 
 - **Wake word flexibility** – J.A.R.V.I.S. listens for the word *“Jarvis”* by default, but you can change it in `config.js` to anything you like.
 - **Voice feedback** – Enable or disable spoken responses via the settings panel (gear icon in the top‑right corner).
-- **Custom skills** – Drop a new `.js` file into the `/skills` folder following the template in `/skills/example.js`. No restart needed.
-- **Dark mode toggle** – Press `Ctrl + Shift + D` to switch between light and dark themes instantly.
-- **Debug mode** – Append `?debug=true` to the URL to see raw speech recognition output and command matching logs.
+- **Custom skills** – Drop a new `.js` file into the `/skills` folder foll
 
 ---
 
-## ⏳ Changelog – Timeline Update 2026‑08‑01
+## 📅 Changelog
 
-**v1.2.0 – “Pruning the Nexus”**  
-- Added weather skill (uses Open‑Meteo API – no key required).  
-- Improved voice recognition accuracy with dynamic grammar list.  
-- Fixed a timeline anomaly where commands with punctuation were ignored.  
-- New UI animation: pulsing arc reactor effect when listening.  
-- Performance optimizations – reduced memory footprint by 20%.
+### 2026-08-06
+- 🎤 **New voice command:** “What’s the weather?” – J.A.R.V.I.S. now fetches weather data (requires internet).
+- 🐛 **Fixed:** Mobile UI glitch where the waveform animation would overlap the command history.
+- ⚡ **Performance:** Reduced memory footprint by 15% through optimized skill loading.
 
 ---
 
-## 📊 Fun Stats (as of latest commit)
+## 💬 Motivational Quote
 
-| Metric                | Value       |
-|-----------------------|-------------|
-| Lines of Code (HTML)  | 1,247       |
-| Lines of CSS          | 3,891       |
-| Lines of JavaScript   | 2,634       |
-| Skills implemented    | 12          |
-| Voice commands parsed | ~4,500/day  |
-| Cups of coffee fueled | ∞           |
+> *“The best way to predict the future is to invent it.”*  
+> — Alan Kay
+
+Let this remind you that every line of code you write is a step toward shaping tomorrow. Keep building.
 
 ---
 
-## 🕰️ Time Variance Authority (TVA) Contribution Protocols
+## 📊 Project Stats
 
-**Attention, variant developer!**  
-You have been recruited by the Time Variance Authority to help maintain the Sacred Timeline of the **jarvis** project. Any deviation from proper protocol will result in… well, let’s just say we have a very effective pruning tool.
+| Metric | Value |
+|--------|-------|
+| **Lines of Code** (HTML/CSS/JS) | 1,250+ |
+| **Built‑in Skills** | 12 |
+| **Voice Commands Recognized** | 50+ |
+| **Average Response Time** | < 200ms |
+| **Browser Support** | Chrome, Edge, Firefox, Safari |
+| **Community Contributions** | 23 (and counting) |
 
-### 🚀 How to Contribute (without creating a nexus event)
+---
 
-1. **File a Temporal Anomaly (Issue)**  
-   - Found a bug? Want a new feature? Open an issue on our **TVA-approved repository**.  
-   - Use the labels: `[anomaly]`, `[enhancement]`, or `[critical timeline breach]`.
-
-2. **Fork the Timeline (Branch)**  
-   - Never work directly on the Sacred Timeline (`main`).  
-   - Create a branch named `fix/<short-description>` or `feature/<awesome-idea>`.
-
-3. **Commit with Chronological Precision**  
-   - Write clear, descriptive commit messages (e.g., *“Add voice command for weather – prevents timeline paradox”*).  
-   - Use present tense imperative style – the
+*J.A.R.V.I.S. – Always at your service.*
