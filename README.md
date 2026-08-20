@@ -4,33 +4,33 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)
 
-Your personal AI sidekick, running entirely in the browser. Inspired by the legendary J.A.R.V.I.S., this project brings a touch of Stark Industries to your desktop. Powered by pure HTML, CSS, and JavaScript, it listens, learns, and responds like a true digital butler without requiring any backend servers.
+A browser-based AI assistant inspired by J.A.R.V.I.S. Built entirely with vanilla HTML, CSS, and JavaScript, it processes voice commands locally without relying on a backend server. 
 
 ## ✨ Features
 
-- 🎤 **Voice Command Ready** – Speak naturally, and J.A.R.V.I.S. will obey.
-- 🌐 **Web-Based** – No installs or build tools required. Just open `index.html`.
-- 🧠 **Modular Skill System** – Easily add new commands or reactions.
-- 🖥️ **Retro-Futuristic UI** – Glowing neon lines, animated waveforms, and a heads-up display.
-- ⚡ **Client-Side Processing** – All logic runs locally with zero latency.
-- 🔐 **Privacy First** – No data leaves your machine. Your secrets stay yours.
-- 🎨 **Customizable** – Change the color scheme, wake words, or the avatar.
+- **Voice Recognition:** Listens and responds to natural language commands.
+- **Zero Setup:** No build tools or dependencies required. Just open `index.html`.
+- **Client-Side Processing:** All logic executes locally in the browser with zero latency.
+- **Privacy First:** Microphone audio and commands never leave your machine.
+- **Modular Skill System:** Add new capabilities by dropping a `.js` file into the `/skills` directory.
+- **Retro-Futuristic UI:** Neon HUD aesthetic with real-time audio waveform visualizations.
+- **Customizable:** Modify the color scheme, wake word, and avatar via standard config files.
 
 ## 🚀 Getting Started
 
-Get J.A.R.V.I.S. up and running in under 30 seconds:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/shubhyagami/jarvis.git
+   ```
+2. **Launch the app:** Open the project folder and double-click `index.html` to open it in your preferred browser.
+3. **Grant microphone access:** Your browser will prompt for microphone permissions. Allow it to enable voice interaction.
+4. **Speak a command:** Try saying *"Hello J.A.R.V.I.S."* or *"What's the time?"*
 
-1. **Download the project** – Clone the repo or grab the latest release.
-2. **Open `index.html`** – No build tools or servers required. Just double-click the file.
-3. **Allow microphone access** – Your browser will ask for permission. Grant it.
-4. **Speak your first command** – Try saying *"Hello J.A.R.V.I.S."* or *"What's the time?"*
+## 🛠️ Architecture
 
-That's it. Your digital butler is now live.
-
-## 🛠️ How It Works
-
-The application follows a clean, event-driven pipeline: **Listen → Parse → Match → Execute → Respond**.
+The application uses an event-driven pipeline: **Listen → Parse → Match → Execute → Respond**.
 
 ```mermaid
 flowchart LR
@@ -46,11 +46,11 @@ flowchart LR
 
 ## 💡 Configuration
 
-You can customize J.A.R.V.I.S. to better fit your needs:
+You can customize J.A.R.V.I.S. by modifying `config.js` in the root directory:
 
-- **Wake word flexibility**: J.A.R.V.I.S. listens for the word *"Jarvis"* by default, but you can change it in `config.js` to anything you like.
-- **Voice feedback**: Enable or disable spoken responses via the settings panel (gear icon in the top-right corner).
-- **Custom skills**: Drop a new `.js` file into the `/skills` folder, following the existing skill structure, and J.A.R.V.I.S. will automatically load it on startup.
+- **Wake Word:** Defaults to *"Jarvis"*, but can be changed to any trigger word you prefer.
+- **Voice Feedback:** Spoken responses can be toggled on or off via the settings panel (the gear icon in the top-right corner of the UI).
+- **Custom Skills:** Create a new `.js` file in the `/skills` folder following the existing module structure. The app will automatically load it on startup.
 
 ## 📊 Project Stats
 
@@ -58,20 +58,20 @@ You can customize J.A.R.V.I.S. to better fit your needs:
 |--------|-------|
 | **Lines of Code** (HTML/CSS/JS) | 1,250+ |
 | **Built-in Skills** | 12 |
-| **Voice Commands Recognized** | 50+ |
+| **Recognized Voice Commands** | 50+ |
 | **Average Response Time** | < 200ms |
 | **Browser Support** | Chrome, Edge, Firefox, Safari |
 
 ## 📅 Changelog
 
 ### 2026-08-19
-- 📝 Readme: Cleaned up documentation, fixed formatting, and improved clarity.
-- 📁 Structure: Standardized the `/skills` folder structure for easier custom additions.
+- **Docs:** Cleaned up documentation, fixed formatting, and improved clarity.
+- **Structure:** Standardized the `/skills` folder structure for easier custom additions.
 
 ### 2026-08-06
-- 🎤 **New voice command:** "What's the weather?" – J.A.R.V.I.S. now fetches weather data (requires internet).
-- 🐛 **Fixed:** Mobile UI glitch where the waveform animation would overlap the command history.
-- ⚡ **Performance:** Reduced memory footprint by 15% through optimized skill loading.
+- **New voice command:** *"What's the weather?"* – J.A.R.V.I.S. now fetches live weather data (requires internet).
+- **Fixed:** Mobile UI glitch where the waveform animation would overlap the command history.
+- **Performance:** Reduced memory footprint by 15% through optimized skill loading.
 
 ---
 
