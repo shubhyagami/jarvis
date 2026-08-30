@@ -5,20 +5,20 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)  
 ![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)  
 
-A lightweight, pure‑client web app that brings a conversational assistant to the browser. Inspired by J.A.R.V.I.S. from the Iron Man universe, JARVIS runs entirely in the client—no server, no build tools, and no external dependencies. Simply open `index.html` and start interacting.
+A lightweight, pure‑client web app that brings a conversational assistant to the browser. Inspired by J.A.R.V.I.S. from the Iron Man universe, JARVIS runs entirely on the client—no server, no build tools, and no external dependencies. Open `index.html` and start interacting.
 
 ---  
 
 ## Overview  
 
-JARVIS is a single‑page application built with HTML5, CSS3, and vanilla JavaScript. All processing occurs locally, making it ideal for offline use or rapid prototyping. The app listens for voice commands, parses them, and executes modular “skills” that you can extend yourself.
+JARVIS is a single‑page application built with HTML5, CSS3, and vanilla JavaScript. All processing happens locally, making it ideal for offline use or rapid prototyping. The app listens for voice commands, parses them, and executes modular “skills” you can extend yourself.
 
 ## Key Features  
 
-- **Voice Recognition** – Uses the Web Speech API for natural‑language input.  
-- **Zero‑Setup Experience** – Open `index.html` directly or serve the folder with any static server.  
-- **Modular Skill System** – Place a `.js` file in `/skills` to add new capabilities; the app automatically loads and registers each skill.  
-- **Retro‑Futuristic UI** – Neon HUD aesthetic with live audio‑waveform visualizations.  
+- **Voice recognition** – Uses the Web Speech API for natural‑language input.  
+- **Zero‑setup experience** – Open `index.html` directly or serve the folder with any static server.  
+- **Modular skill system** – Place a `.js` file in `/skills` to add new capabilities; the app automatically loads and registers each skill.  
+- **Retro‑futuristic UI** – Neon HUD aesthetic with live audio‑waveform visualizations.  
 - **Customizable** – Adjust wake word, color scheme, avatar, and response preferences via `config.js`.  
 
 ## Getting Started  
@@ -77,7 +77,7 @@ The pipeline is fully asynchronous and event‑driven, delivering a responsive e
 
 ## Changelog  
 
-- **2026‑08‑21** – Cleaned up README formatting, standardized skill module exports for easier extension.  
+- **2026‑08‑21** – Cleaned up README formatting and standardized skill module exports for easier extension.  
 - **2026‑08‑06** – Added live weather command; fixed mobile UI overlap in waveform animation; reduced memory usage by 15 % through optimized skill loading.  
 
 ---  
