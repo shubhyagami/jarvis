@@ -11,7 +11,7 @@ A lightweight, pure‑client web app that brings a conversational assistant to t
 
 ## Overview  
 
-JARVIS is a single‑page application built with HTML5, CSS3, and vanilla JavaScript. All processing happens locally, making it ideal for offline use or rapid prototyping. The app listens for voice commands, parses them, and executes modular “skills” you can extend yourself.
+JARVIS is a single‑page application built with HTML5, CSS3, and vanilla JavaScript. All processing occurs locally, making it ideal for offline use or rapid prototyping. The app listens for voice commands, parses them, and executes modular “skills” you can extend yourself.
 
 ## Key Features  
 
