@@ -5,81 +5,109 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)  
 ![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)  
 
-A lightweight, pure‑client web app that brings a conversational assistant to the browser. Inspired by J.A.R.V.I.S. from the Iron Man universe, JARVIS runs entirely on the client—no server, no build tools, and no external dependencies. Open `index.html` and start interacting.
+JARVIS is a lightweight, pure‑client web app that turns your browser into a conversational AI assistant. Inspired by the Iron Man J.A.R.V.I.S., the entire application runs locally—no server, no build tools, no external dependencies. Open `index.html` and start interacting.
 
----  
+---
 
-## Overview  
+## Overview
 
-JARVIS is a single‑page application built with HTML5, CSS3, and vanilla JavaScript. All processing occurs locally, making it ideal for offline use or rapid prototyping. The app listens for voice commands, parses them, and executes modular “skills” you can extend yourself.
+A single‑page application built with vanilla HTML5, CSS3, and JavaScript. All processing occurs on the client side, making it ideal for offline use, quick prototyping, or educational demos. The assistant listens for voice commands through the Web Speech API, parses them into a simple command language, and runs one of many modular *skills* that you can add or modify yourself.
 
-## Key Features  
+---
 
-- **Voice recognition** – Uses the Web Speech API for natural‑language input.  
-- **Zero‑setup experience** – Open `index.html` directly or serve the folder with any static server.  
-- **Modular skill system** – Place a `.js` file in `/skills` to add new capabilities; the app automatically loads and registers each skill.  
-- **Retro‑futuristic UI** – Neon HUD aesthetic with live audio‑waveform visualizations.  
-- **Customizable** – Adjust wake word, color scheme, avatar, and response preferences via `config.js`.  
+## Key Features
 
-## Getting Started  
+- **Voice recognition** – Natural‑language input powered by the Web Speech API.  
+- **Zero‑setup** – Launch by opening `index.html` or serve the folder with any static HTTP server.  
+- **Modular skill system** – Drop a `.js` file into `/skills` and the app registers it automatically.  
+- **Retro‑futuristic UI** – Neon HUD with live audio‑waveform visualizations.  
+- **Customizable** – Adjust wake word, color scheme, avatar, and response preferences via `config.js`.
+
+---
+
+## Getting Started
 
 1. **Clone the repository**  
-   ```bash
-   git clone https://github.com/shubhyagami/jarvis.git
-   cd jarvis
-   ```  
+   `git clone https://github.com/shubhyagami/jarvis.git` &nbsp;&nbsp; ← then `cd jarvis`
 
-2. **Run the app**  
+2. **Launch the app**  
    - Double‑click `index.html` in your file explorer, **or**  
-   - Start a simple static server (e.g., `python -m http.server`) in the project directory.  
+   - Start a simple static server, e.g. `python -m http.server`, in the project directory.
 
-3. **Grant microphone permission**  
-   The browser will request access to the microphone; allow it to enable voice commands.  
+3. **Grant microphone permission** – The browser will request access to your microphone; allow it to enable voice commands.
 
-4. **Start speaking**  
-   Say “Hey JARVIS” or any supported command such as “What’s the time?”  
+4. **Start speaking** – Say “Hey JARVIS” or any supported command such as “What’s the time?”  
 
-## Supported Browsers  
+> **Tip**: On some browsers the voice recognition may ask for permission each time you reload. If that happens, click the lock icon in the address bar → Microphone → *Allow*.
 
-- Chrome (recommended)  
-- Microsoft Edge  
-- Firefox  
-- Safari  
+---
 
-Advanced voice features may behave slightly differently on Safari or Firefox.
+## Supported Browsers
 
-## Architecture  
+| Browser | Status | Notes |
+|---------|--------|-------|
+| Chrome | ✔ | Recommended |
+| Microsoft Edge | ✔ | Full feature set |
+| Firefox | ✔ | Voice recognition may be less accurate |
+| Safari | ✔ | Advanced features may behave slightly differently |
+
+---
+
+## How It Works
 
 ```
-User speaks → Microphone → Speech Recognition API → Command Parser → 
+User speaks → Microphone → Speech Recognition API → Command Parser →
    ├─ Skill matched? → Execute skill → Voice / visual output
    └─ No match → Fallback response → Voice / visual output
-```  
+```
 
-The pipeline is fully asynchronous and event‑driven, delivering a responsive experience.
+The pipeline is fully asynchronous and event‑driven, ensuring a responsive experience.
 
-## Customization  
+---
+
+## Customization
 
 - **Wake word** – Edit `config.js` to set any trigger phrase you prefer.  
-- **Voice feedback** – Toggle spoken responses on or off using the settings icon.  
-- **Add skills** – Create a new file in `/skills` that exports a function matching the skill contract. The app loads all such modules automatically on startup.  
+- **Voice feedback** – Toggle spoken responses on or off using the settings icon in the UI.  
+- **Add skills** – Create a new file in `/skills` that exports a function matching the skill contract. The app loads all such modules automatically at startup.
 
-## Project Statistics  
+---
+
+## Adding New Skills
+
+1. Create a file `myskill.js` in `/skills`.  
+2. Export a function that accepts the `state` object and returns a promise resolving to a string or a visual element.
+3. The assistant will load it automatically on the next page load.
+
+> **Skill contract example**  
+> ```js
+> export function run(state, command) {
+>   // perform action
+>   return Promise.resolve('Skill executed');
+> }
+> ```
+
+---
+
+## Project Statistics
 
 | Metric | Value |
 |--------|-------|
 | Code (HTML/CSS/JS) | 1,250+ lines |
 | Built‑in skills | 12 |
 | Recognized commands | 50+ |
-| Average response time | < 200 ms |
-| Browser support | Chrome, Edge, Firefox, Safari |
-| License | MIT |
+| Avg. response time | < 200 ms |
+| Licensed under MIT | ✔ |
 
-## Changelog  
+---
 
-- **2026‑08‑21** – Cleaned up README formatting and standardized skill module exports for easier extension.  
-- **2026‑08‑06** – Added live weather command; fixed mobile UI overlap in waveform animation; reduced memory usage by 15 % through optimized skill loading.  
+## Changelog
 
----  
+- **2026‑08‑21** – Cleaned up README formatting; streamlined skill module exports.  
+- **2026‑08‑06** – Added live weather command; fixed mobile UI overlap in waveform animation; reduced memory usage by 15 %.  
 
-*JARVIS – Always at your service.*
+---
+
+## License
+
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
