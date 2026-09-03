@@ -1,33 +1,36 @@
 # JARVIS – Browser‑Based AI Assistant  
 
-**JARVIS** is a lightweight, pure‑client web application that turns any web browser into a personal AI assistant. Inspired by Iron Man’s J.A.R.V.I.S., the entire app runs locally – no server, no build tools, no external dependencies. Just open `index.html` and start conversing.
+**JARVIS** is a lightweight, pure‑client web app that turns any modern web browser into a personal AI assistant. The entire application runs locally – no server, no build tools, no external dependencies. Just open `index.html` or serve the folder with a static HTTP server and start conversing.
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)  
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)  
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)  
-![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)  
 
 ---
 
 ## Quick Start
 
-1. **Clone the repo**  
-   `git clone https://github.com/shubhyagami/jarvis.git && cd jarvis`
+1. **Clone the repository**  
+   ```bash  
+   git clone https://github.com/shubhyagami/jarvis.git && cd jarvis  
+   ```
 
 2. **Open the app**  
-   *Double‑click `index.html`* or serve the folder with a static server such as  
-   `python -m http.server` or `npx serve`.
+   * Double‑click `index.html` in your file manager, or launch a local static server such as:  
+     `python -m http.server`  (Python 3)  
+     `npx serve`  (Node)  
 
-3. **Grant microphone access** – A browser prompt will appear; allow it.
+3. **Grant microphone access** – a browser prompt will request permission.  
 
-4. **Speak** – Use the default trigger “Hey JARVIS” (configurable) or any built‑in command like “What’s the time?”.
+4. **Talk to JARVIS** – the default wake word is “Hey JARVIS”, but you can change it in `config.js`.  
 
 ---
 
 ## Supported Browsers
 
-| Browser | Support | Notes |
-|---------|---------|-------|
+| Browser | Status | Notes |
+|---------|--------|-------|
 | Chrome  | ✔ | Recommended |
 | Edge    | ✔ | Full feature set |
 | Firefox | ✔ | Voice recognition may be less accurate |
@@ -37,53 +40,63 @@
 
 ## How It Works
 
-1. Microphone captures audio.  
-2. Web Speech API turns speech into text.  
-3. A lightweight command parser checks the text against a list of skill names.  
-4. If a skill matches, its module is executed.  
-5. The skill returns a string or an HTML element; the assistant speaks or displays the result.  
-6. If no skill matches, a fallback response is shown.
+1. The microphone captures audio.  
+2. The [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) converts speech to text.  
+3. A lightweight parser checks the transcription against a list of skills.  
+4. If a skill matches, its module is executed and the result is spoken or displayed.  
+5. If no skill matches, a fallback response is shown.  
 
-The entire pipeline is asynchronous and event‑driven, keeping the UI responsive.
+All steps are asynchronous and event‑driven, keeping the UI responsive.
 
 ---
 
-## Key Features
+## Features
 
-- **Voice recognition** – Uses the Web Speech API for natural‑language input.  
-- **Zero‑setup** – Launch by opening `index.html` or any static server.  
-- **Modular skill system** – Add a `*.js` file to `/skills` and the app auto‑registers it.  
-- **Retro‑futuristic UI** – Neon HUD with live audio waveforms.  
-- **Customizable** – Edit `config.js` to change wake word, colors, avatar, and voice settings.  
+- **Instant voice recognition** – uses the browser’s built‑in Speech API.  
+- **Zero‑setup** – launch from `index.html` or any static file server.  
+- **Modular skill system** – drop a `*.js` file into `/skills` and it is auto‑registered.  
+- **Retro‑futuristic UI** – neon‑style HUD with live audio waveforms.  
+- **Highly configurable** – tweak `config.js` for wake word, colors, avatar, voice, and more.
 
 ---
 
 ## Customization
 
-| Setting | Where to change | Example |
-|---------|-----------------|---------|
+| Setting | File / Location | Example |
+|---------|-----------------|--------|
 | Wake word | `config.js` | `wakeWord: "Hey JARVIS"` |
 | Color scheme | `config.js` | `primaryColor: "#0bd"` |
-| Avatar | `assets/avatars` | Replace `avatar.png` |
+| Avatar image | `assets/avatars/` | Replace `avatar.png` |
 | Speech feedback | UI settings button | Toggle “Speak response” |
 
 ---
 
-## Adding a New Skill
+## Extending – Adding a New Skill
 
-1. Create `skills/mySkill.js`.  
-2. Export a function that accepts `state` and `command`.  
-3. Return a promise that resolves to a string or an HTML element.  
+1. Create a file in `/skills`, e.g. `skills/mySkill.js`.  
+2. Export a `run(state, command)` function that returns a promise resolving to a string or an HTML element.
 
-**Skill contract example**  
-```js
-export function run(state, command) {
-  // Perform work
-  return Promise.resolve('Skill result');
-}
+```javascript
+    export function run(state, command) {
+        // Perform work
+        return Promise.resolve('Skill result');
+    }
 ```
 
-The module will be loaded automatically on the next page load.
+The module will load automatically on the next page load.
+
+---
+
+## Contributing
+
+The project is open to pull requests. Please follow these steps:
+
+1. Fork the repository.  
+2. Create a feature branch (`git checkout -b feature/...`).  
+3. Commit your changes and push to your fork.  
+4. Open a pull request against the `main` branch.  
+
+Before opening a PR, run the linter (if available) to ensure consistent code style.  
 
 ---
 
@@ -92,14 +105,14 @@ The module will be loaded automatically on the next page load.
 - Lines of code: ~1,250 (HTML/CSS/JS)  
 - Built‑in skills: 12  
 - Recognized commands: 50+  
-- Avg. response time: <200 ms  
-- License: MIT
+- Average response time: < 200 ms  
 
 ---
 
 ## Changelog
 
-- **2026‑08‑21** – Minor README cleanup, streamlined skill module exports.  
+- **2026‑09‑03** – README cleanup, improved wording, added contributor guidance.  
+- **2026‑08‑21** – Minor README tweaks, streamlined skill module exports.  
 - **2026‑08‑06** – Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %.  
 
 ---
