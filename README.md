@@ -1,6 +1,6 @@
 # JARVIS – Browser‑Based AI Assistant
-A lightweight pure‑client web app that turns a modern web browser into a personal AI assistant.  
-Everything is encoded in the browser – no server, no build step, no external dependencies.
+A lightweight, pure‑client web app that turns a modern browser into a personal AI assistant.  
+Everything runs entirely in the browser – no server, no build step, no external dependencies.
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)  
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)  
@@ -15,59 +15,69 @@ Everything is encoded in the browser – no server, no build step, no external d
 ```bash
 git clone https://github.com/shubhyagami/jarvis.git
 cd jarvis
-# Open the page directly
-#   - Double‑click index.html
-#   - Or serve with a static server
+```
+
+Open `index.html` in a supported browser (Chrome ≥ 49, Edge ≥ 79, Firefox ≥ 52, Safari ≥ 10.1).  
+If you prefer a local server, run:
+
+```bash
 python -m http.server   # Python 3
-# or
+```
+
+or
+
+```bash
 npx serve              # Node.js
 ```
 
-When the page loads, the browser will request microphone access.  
-Speak the wake word `Hey JARVIS` (changeable in `config.js`).  
-The assistant will respond by voice and/or text.
+Grant microphone access when prompted.  
+Speak the wake word (default `Hey JARVIS`) or change it in `config.js`.  
+The assistant will reply by voice and/or text.
 
 ---
 
 ## Browser Prerequisites
 
-* A browser that implements the Web Speech API:  
-  Chrome ≥ 49, Edge ≥ 79, Firefox ≥ 52, Safari ≥ 10.1
-* No polyfills are required; older browsers will simply not provide speech recognition.
+- Web Speech API support:  
+  - Chrome ≥ 49  
+  - Edge ≥ 79  
+  - Firefox ≥ 52  
+  - Safari ≥ 10.1  
+- No polyfills are needed; unsupported browsers simply lose speech recognition.
 
 ---
 
 ## How It Works
 
-1. **Capture audio** – the browser’s microphone input is recorded.  
+1. **Capture audio** – the browser records microphone input.  
 2. **Speech‑to‑text** – Web Speech API converts it to plain text.  
 3. **Skill matching** – a lightweight parser checks the command against the skill list.  
-4. **Execution** – if a match is found, the corresponding module runs and returns a string or an HTMLElement.  
+4. **Execution** – a matching module runs, returning a string or an HTMLElement.  
 5. **Fallback** – if no skill matches, a default response is shown.  
 
-All operations are asynchronous, so the UI stays responsive.
+All steps are asynchronous, keeping the UI responsive.
 
 ---
 
 ## Core Features
 
-- **Zero setup** – launch from `index.html` or any static HTTP server.  
+- **Zero setup** – launch directly from `index.html` or any static HTTP server.  
 - **Built‑in voice recognition** – no external libraries.  
 - **Modular skill system** – drop a `*.js` file into `/skills` and it registers automatically.  
 - **Neon HUD** with a live audio waveform.  
 - **Fully configurable** – tweak `config.js` for wake word, colors, avatar, voice, etc.  
-- **No external dependencies** – everything runs client‑side.
+- **Client‑side only** – no server‑side code or build process.
 
 ---
 
 ## Customization
 
-| Feature        | File / Location           | Example Value          |
-|----------------|---------------------------|------------------------|
-| Wake word      | `config.js`               | `wakeWord: "Hey JARVIS"` |
-| Primary color  | `config.js`               | `primaryColor: "#0bd"`  |
-| Avatar image   | `assets/avatars/`        | Replace `avatar.png`   |
-| Voice feedback | UI settings button        | Toggle “Speak response”|
+| Feature          | File / Location       | Example Value                           |
+|------------------|-----------------------|----------------------------------------|
+| Wake word        | `config.js`           | `wakeWord: "Hey JARVIS"`               |
+| Primary color    | `config.js`           | `primaryColor: "#0bd"`                 |
+| Avatar image     | `assets/avatars/`      | Replace `avatar.png`                    |
+| Voice feedback   | UI settings button     | Toggle “Speak response”                 |
 
 ---
 
@@ -83,7 +93,7 @@ export function run(state, command) {
 }
 ```
 
-The module will load automatically the next time the page is opened.
+The module will load automatically the next time the app is opened.
 
 ---
 
@@ -92,7 +102,7 @@ The module will load automatically the next time the page is opened.
 1. Fork the repository.  
 2. Create a feature branch: `git checkout -b feature/…`.  
 3. Commit and push.  
-4. Open a pull request against the `main` branch.
+4. Open a pull request against the `main` branch.  
 
 If a linter is available, run it before submitting a PR to keep the code style consistent.
 
@@ -111,7 +121,7 @@ If a linter is available, run it before submitting a PR to keep the code style c
 
 - **2026‑09‑04** – README cleanup, improved wording, added contribution guidance.  
 - **2026‑09‑03** – Minor README tweaks, streamlined skill module exports.  
-- **2026‑08‑21** – Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %.  
+- **2026‑08‑21** – Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %.
 
 ---
 
