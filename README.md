@@ -1,7 +1,7 @@
 # JARVIS – Browser‑Based AI Assistant
 
 A lightweight, pure‑client web app that turns any modern browser into a voice‑controlled AI assistant.  
-Everything runs *entirely in the browser* – no server, no build step, no external dependencies.
+Everything runs **entirely in the browser**—no server, no build step, no external dependencies.
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)  
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)  
@@ -21,7 +21,7 @@ cd jarvis
 ```
 
 Open `index.html` directly in any supported browser (Chrome ≥ 49, Edge ≥ 79, Firefox ≥ 52, Safari ≥ 10.1).  
-For a local server:
+Alternatively, serve it locally:
 
 ```bash
 # Python 3
@@ -31,18 +31,18 @@ python -m http.server
 npx serve
 ```
 
-Grant microphone access when the page loads.  
-Say the default wake word **“Hey JARVIS”** (or change it in `config.js`) and let the assistant respond.
+Allow microphone access when prompted.  
+Say the default wake word **“Hey JARVIS”** (or modify it in `config.js`) and watch the assistant respond.
 
 ---
 
 ## Features
 
-- **Zero‑setup** – run directly from `index.html` or any static host.
-- **Built‑in voice recognition & synthesis** – uses the Web Speech API; no external libraries.
-- **Modular skill system** – drop a `*.js` file into `/skills` and it registers automatically.
-- **Neon HUD & live waveform** – visual feedback of microphone activity.
-- **Fully configurable** – edit `config.js` for wake word, colors, avatar, voice, etc.
+- **Zero‑setup** – run from `index.html` or any static host.  
+- **Built‑in voice recognition & synthesis** – uses only the Web Speech API.  
+- **Modular skill system** – drop a `*.js` file into `/skills` and it registers automatically.  
+- **Neon HUD & live waveform** – visual feedback of microphone activity.  
+- **Fully configurable** – edit `config.js` to change wake word, colors, avatar, voice, etc.  
 - **Client‑side only** – no server‑side code or build process.
 
 ---
@@ -50,22 +50,22 @@ Say the default wake word **“Hey JARVIS”** (or change it in `config.js`) and
 ## Browser Support
 
 | Feature | Minimum supported browser |
-|---------|----------------------------|
+|---------|---------------------------|
 | Web Speech API (recognition + synthesis) | Chrome ≥ 49, Edge ≥ 79, Firefox ≥ 52, Safari ≥ 10.1 |
 | Audio context (waveform) | Same as above |
 | Promises & async/await | All modern browsers (IE 11+ not supported) |
 
-Unsupported browsers will still show the UI but lack speech functionality.
+Unsupported browsers will display the UI but lack speech functionality.
 
 ---
 
 ## How It Works
 
 1. **Capture audio** – the browser records microphone input.  
-2. **Speech‑to‑text** – the Web Speech API transcribes speech to plain text.  
-3. **Skill matching** – a lightweight parser checks the command against the skill list.  
+2. **Speech‑to‑text** – the Web Speech API transcribes speech to text.  
+3. **Skill matching** – a lightweight parser checks the command against the available skills.  
 4. **Execution** – a matching skill module runs, returning a string or an HTMLElement.  
-5. **Fallback** – if no skill matches, a default response is shown.  
+5. **Fallback** – if no skill matches, a default response is shown.
 
 All steps are asynchronous, keeping the UI responsive.
 
@@ -74,7 +74,7 @@ All steps are asynchronous, keeping the UI responsive.
 ## Customization
 
 | Setting | File / Location | Example |
-|---------|----------------|---------|
+|---------|-----------------|--------|
 | Wake word | `config.js` | `wakeWord: "Hey JARVIS"` |
 | Primary color | `config.js` | `primaryColor: "#0bd"` |
 | Avatar image | `assets/avatars/` | Replace `avatar.png` |
@@ -119,8 +119,8 @@ If a linter is available, run it before submitting a PR to keep the code style c
 
 ## Changelog
 
-- **2026‑09‑04** – README cleanup, improved wording, added contribution guidance.  
-- **2026‑09‑03** – Minor README tweaks, streamlined skill module exports.  
+- **2026‑09‑07** – README cleanup, added contribution guidance.  
+- **2026‑09‑04** – Minor wording improvements.  
 - **2026‑08‑21** – Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %.
 
 ---
