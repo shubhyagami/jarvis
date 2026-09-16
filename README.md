@@ -1,19 +1,21 @@
 # JARVIS – Browser‑Based AI Assistant
 
-A lightweight, pure‑client web app that turns any modern browser into a voice‑controlled AI assistant.  
-Everything runs **entirely in the browser** – no server, no build step, no external dependencies.
+JARVIS is a lightweight, pure‑client web app that turns any modern browser into a voice‑controlled AI
+assistant.  
+Everything is executed **entirely in the browser** – no server, no build step, no external
+dependencies.
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)  
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)  
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)  
-![Supported Browsers](https://img.shields.io/badge/Supported-Chrome%20%7C%20Edge%20%7C%20Firefox%20%7C%20Safari-brightgreen)  
-![GitHub stars](https://img.shields.io/github/stars/shubhyagami/jarvis.svg?style=flat-square)  
-![Repo size](https://img.shields.io/github/repo-size/shubhyagami/jarvis.svg?style=flat-square)  
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![Supported Browsers](https://img.shields.io/badge/Supported-Chrome%20%7C%20Edge%20%7C%20Firefox%20%7C%20Safari-brightgreen)
+![GitHub stars](https://img.shields.io/github/stars/shubhyagami/jarvis.svg?style=flat-square)
+![Repo size](https://img.shields.io/github/repo-size/shubhyagami/jarvis.svg?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
 
 ---
 
-## Getting Started
+## Quick start
 
 ```bash
 git clone https://github.com/shubhyagami/jarvis.git
@@ -23,7 +25,7 @@ cd jarvis
 Open `index.html` in any supported browser (Chrome ≥ 49, Edge ≥ 79, Firefox ≥ 52, Safari ≥ 10.1).  
 If you prefer a local server:
 
-```bash
+```
 # Python 3
 python -m http.server
 
@@ -31,7 +33,7 @@ python -m http.server
 npx serve
 ```
 
-Grant microphone access when prompted, say the default wake word **“Hey JARVIS”** (or change it in `config.js`), and the assistant will respond.
+Grant microphone access, say the default wake word **“Hey JARVIS”** (or change it in `config.js`), and the assistant will respond.
 
 ---
 
@@ -39,16 +41,16 @@ Grant microphone access when prompted, say the default wake word **“Hey JARVIS
 
 - **Zero‑setup** – run directly from `index.html` or host on any static server.  
 - **Web Speech API** – native voice recognition and synthesis.  
-- **Modular skill system** – add or remove skills by editing the `/skills` directory.  
+- **Modular skill system** – add or remove skills by editing the `skills/` directory.  
 - **Live UI** – neon HUD with an animated waveform.  
 - **Fully configurable** – tweak wake word, colors, avatar, voice, etc. in `config.js`.
 
 ---
 
-## Browser Support
+## Supported browsers
 
 | Feature | Minimum supported browser |
-|---------|---------------------------|
+|---------|--------------------------|
 | Web Speech API (recognition + synthesis) | Chrome ≥ 49, Edge ≥ 79, Firefox ≥ 52, Safari ≥ 10.1 |
 | AudioContext (waveform) | Same as above |
 | ES 2017 (Promises + async/await) | All current browsers |
@@ -69,20 +71,20 @@ All operations are asynchronous, keeping the UI responsive.
 
 ---
 
-## Customization
+## Customisation
 
-| Setting | File / Location   | Example                 |
-|---------|-------------------|-------------------------|
+| Setting | Location | Example |
+|---------|----------|---------|
 | Wake word | `config.js` | `wakeWord: "Hey JARVIS"` |
-| Primary color | `config.js` | `primaryColor: "#0bd"`  |
+| Primary colour | `config.js` | `primaryColor: "#0bd"` |
 | Avatar image | `assets/avatars/` | Replace `avatar.png` |
-| Voice feedback | UI settings button | Toggle “Speak response” |
+| Voice feedback | UI Settings button | Toggle “Speak response” |
 
 ---
 
 ## Adding a Skill
 
-Create `skills/yourSkill.js` and export a `run(state, command)` function that resolves to a string or an `HTMLElement`.
+Create a file `skills/yourSkill.js` and export a `run(state, command)` function that resolves to a string or an `HTMLElement`:
 
 ```javascript
 export function run(state, command) {
@@ -109,16 +111,16 @@ The module will be loaded automatically the next time the app starts.
 
 - Lines of code: ~1.3 k (HTML/CSS/JS)  
 - Built‑in skills: 12  
-- Recognized commands: 50+  
+- Recognised commands: 50+  
 - Average response time: < 200 ms  
 
 ---
 
 ## Changelog
 
-- **2026‑09‑07** – README cleanup, added contribution guidelines.  
-- **2026‑09‑04** – Minor wording improvements.  
-- **2026‑08‑21** – Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %.  
+- 2026‑09‑07 – README cleanup, added contribution guidelines.  
+- 2026‑09‑04 – Minor wording improvements.  
+- 2026‑08‑21 – Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %.
 
 ---
 
