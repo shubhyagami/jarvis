@@ -9,29 +9,41 @@ Everything runs **exclusively in the browser** – no server, no build step, no 
 ![Supported Browsers](https://img.shields.io/badge/Supported-Chrome%20%7C%20Edge%20%7C%20Firefox%20%7C%20Safari-brightgreen)  
 ![GitHub stars](https://img.shields.io/github/stars/shubhyagami/jarvis.svg?style=flat-square)  
 ![Repo size](https://img.shields.io/github/repo-size/shubhyagami/jarvis.svg?style=flat-square)  
-![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)  
 
 ---
 
-## Quick Start
+## Overview
 
-```bash
-git clone https://github.com/shubhyagami/jarvis.git
-cd jarvis
-```
+JARVIS is a single‑page application that listens for voice commands, processes them locally, and delivers spoken or visual responses.  
+Because it relies on the Web Speech API, it works in any browser that supports speech recognition and synthesis (Chrome ≥ 49, Edge ≥ 79, Firefox ≥ 52, Safari ≥ 10.1).
 
-Open `index.html` in a supported browser (Chrome ≥ 49, Edge ≥ 79, Firefox ≥ 52, Safari ≥ 10.1).  
-If you prefer a local server, any of the following will work:
+---
 
-```bash
-# Python 3
-python -m http.server
+## Getting Started
 
-# Node.js
-npx serve
-```
+1. **Clone the repo**
 
-Allow microphone access, say the default wake word **“Hey JARVIS”** (or edit `config.js`), and the assistant will respond.
+   ```bash
+   git clone https://github.com/shubhyagami/jarvis.git
+   cd jarvis
+   ```
+
+2. **Open the app**
+
+   - **Directly** – double‑click `index.html` or open it in your browser.
+   - **With a local server** (recommended for HTTPS‑only microphones):
+
+     ```bash
+     # Python 3
+     python -m http.server
+
+     # Node.js
+     npx serve
+     ```
+
+3. **Grant microphone access** when prompted.  
+   Say the default wake word **“Hey JARVIS”** (or change it in `config.js`) and watch the assistant come alive.
 
 ---
 
@@ -40,10 +52,10 @@ Allow microphone access, say the default wake word **“Hey JARVIS”** (or edit
 | Feature | What it gives you |
 |---------|------------------|
 | **Zero‑setup** | Run directly from `index.html` or host on any static server |
-| **Web Speech API** | Native voice recognition and synthesis, no external services |
+| **Web Speech API** | Native voice recognition and speech synthesis, no external APIs |
 | **Modular skill system** | Add or remove skills by editing the `skills/` directory |
 | **Live UI** | Neon HUD, animated waveform, friendly avatar |
-| **Configurable** | Tweak wake word, colors, avatar, voice, etc. in `config.js` |
+| **Configurable** | Modify wake word, colors, avatar, voice, etc. in `config.js` |
 
 ---
 
@@ -60,16 +72,17 @@ Allow microphone access, say the default wake word **“Hey JARVIS”** (or edit
 
 ## Adding a Skill
 
-Create a file `skills/yourSkill.js` and export a `run(state, command)` function that resolves to a string or an `HTMLElement`:
+1. Create a new file `skills/yourSkill.js`.
+2. Export a `run(state, command)` function that returns a promise resolved with either a string or an `HTMLElement`.
 
-```javascript
-export function run(state, command) {
-  // Your logic here
-  return Promise.resolve('Skill result');
-}
-```
+   ```js
+   export function run(state, command) {
+     // Your logic here
+     return Promise.resolve('Skill result');
+   }
+   ```
 
-The module will be loaded automatically the next time the app starts.
+3. Restart the app to load the new skill automatically.
 
 ---
 
@@ -77,9 +90,8 @@ The module will be loaded automatically the next time the app starts.
 
 1. Fork the repository.  
 2. Create a feature branch: `git checkout -b feature/...`.  
-3. Commit and push.  
-4. Open a pull request against `main`.  
-5. Run the linter before submitting to keep the code style consistent.
+3. Commit, push, and open a pull request against `main`.  
+4. Run the linter (`npm run lint`) before submitting to keep the code style consistent.
 
 ---
 
@@ -87,16 +99,18 @@ The module will be loaded automatically the next time the app starts.
 
 - ~1.3 k lines of HTML, CSS, and JavaScript  
 - Built‑in skills: 12  
-- Recognised commands: 50+ (see `skills/`)  
+- Recognised commands: 50 + (see `skills/`)  
 - Average response time: < 200 ms  
 
 ---
 
 ## Changelog
 
-- **2026‑09‑07** – README cleanup, added contribution guidelines.  
-- **2026‑09‑04** – Minor wording improvements.  
-- **2026‑08‑21** – Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %.  
+| Date | Change |
+|------|--------|
+| **2026‑09‑07** | README cleanup, added contribution guidelines. |
+| **2026‑09‑04** | Minor wording improvements. |
+| **2026‑08‑21** | Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %. |
 
 ---
 
