@@ -1,61 +1,49 @@
+[K[2m  [2mmodel deepseek-ai/deepseek-v4.1-flash failed, trying next...[0m[0m
 # JARVIS – Browser‑Based AI Assistant
 
-A lightweight, pure‑client web app that turns any modern browser into a voice‑controlled AI assistant.  
-Everything runs **exclusively in the browser** – no server, no build step, no external dependencies.
+JARVIS is a lightweight, pure‑client web app that turns a modern browser into a voice‑controlled AI assistant.  
+Everything runs **entirely in the browser** – no server, no build step, no external dependencies.
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)  
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)  
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)  
 ![Supported Browsers](https://img.shields.io/badge/Supported-Chrome%20%7C%20Edge%20%7C%20Firefox%20%7C%20Safari-brightgreen)  
-![GitHub stars](https://img.shields.io/github/stars/shubhyagami/jarvis.svg?style=flat-square)  
-![Repo size](https://img.shields.io/github/repo-size/shubhyagami/jarvis.svg?style=flat-square)  
-![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)  
+![GitHub stars](https://img.shields.io/github/stars/shubhyagami/jarvis?style=flat-square)  
+![Repo size](https://img.shields.io/github/repo-size/shubhyagami/jarvis?style=flat-square)  
+![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
 
 ---
 
-## Overview
+## Quick Start
 
-JARVIS is a single‑page application that listens for voice commands, processes them locally, and delivers spoken or visual responses.  
-Because it relies on the Web Speech API, it works in any browser that supports speech recognition and synthesis (Chrome ≥ 49, Edge ≥ 79, Firefox ≥ 52, Safari ≥ 10.1).
+> **Important:** Modern browsers require HTTPS for microphone access.  
+> If you run the app locally, use a local server (e.g., `python -m http.server`) or use `serve` from npm.
 
----
+```bash
+git clone https://github.com/shubhyagami/jarvis.git
+cd jarvis
+# Open a local server
+python -m http.server   # or npx serve
+```
 
-## Getting Started
-
-1. **Clone the repo**
-
-   ```bash
-   git clone https://github.com/shubhyagami/jarvis.git
-   cd jarvis
-   ```
-
-2. **Open the app**
-
-   - **Directly** – double‑click `index.html` or open it in your browser.
-   - **With a local server** (recommended for HTTPS‑only microphones):
-
-     ```bash
-     # Python 3
-     python -m http.server
-
-     # Node.js
-     npx serve
-     ```
-
-3. **Grant microphone access** when prompted.  
-   Say the default wake word **“Hey JARVIS”** (or change it in `config.js`) and watch the assistant come alive.
+Open the address in your browser, grant microphone permission, and say the wake word **“Hey JARVIS”** (configurable in `config.js`).
 
 ---
 
-## Features
+## How It Works
 
-| Feature | What it gives you |
-|---------|------------------|
-| **Zero‑setup** | Run directly from `index.html` or host on any static server |
-| **Web Speech API** | Native voice recognition and speech synthesis, no external APIs |
-| **Modular skill system** | Add or remove skills by editing the `skills/` directory |
-| **Live UI** | Neon HUD, animated waveform, friendly avatar |
-| **Configurable** | Modify wake word, colors, avatar, voice, etc. in `config.js` |
+JARVIS listens for voice commands via the Web Speech API, processes them locally, and responds audibly or visually.  
+Supported browsers: Chrome ≥ 49, Edge ≥ 79, Firefox ≥ 52, Safari ≥ 10.1.
+
+---
+
+## Key Features
+
+- **Zero‑setup** – launch directly from `index.html` or any static server.
+- **Native Web Speech** – no external API calls; all recognition and synthesis run in the browser.
+- **Modular skill system** – add or remove features by placing files in the `skills/` folder.
+- **Live UI** – neon HUD, animated waveform, and an animated avatar.
+- **Configurable** – adjust wake word, colors, avatar, voice, and more in `config.js`.
 
 ---
 
@@ -64,42 +52,42 @@ Because it relies on the Web Speech API, it works in any browser that supports s
 | Setting | File / Location | Example |
 |---------|-----------------|---------|
 | Wake word | `config.js` | `wakeWord: "Hey JARVIS"` |
-| Primary color | `config.js` | `primaryColor: "#0bd"` |
+| Primary colour | `config.js` | `primaryColor: "#0bd"` |
 | Avatar image | `assets/avatars/` | Replace `avatar.png` |
 | Voice feedback | UI Settings | Toggle “Speak response” |
 
 ---
 
-## Adding a Skill
+## Adding a New Skill
 
-1. Create a new file `skills/yourSkill.js`.
-2. Export a `run(state, command)` function that returns a promise resolved with either a string or an `HTMLElement`.
+1. Create `skills/yourSkill.js`.
+2. Export a `run(state, command)` function that returns a promise resolved with a string or an `HTMLElement`.
 
-   ```js
-   export function run(state, command) {
-     // Your logic here
-     return Promise.resolve('Skill result');
-   }
-   ```
+```js
+export function run(state, command) {
+  // Your logic here
+  return Promise.resolve('Skill result');
+}
+```
 
-3. Restart the app to load the new skill automatically.
+3. Reload the app; the new skill will be available automatically.
 
 ---
 
 ## Contributing
 
-1. Fork the repository.  
+1. Fork the repo.  
 2. Create a feature branch: `git checkout -b feature/...`.  
 3. Commit, push, and open a pull request against `main`.  
-4. Run the linter (`npm run lint`) before submitting to keep the code style consistent.
+4. Run the linter (`npm run lint`) before submitting to keep code style consistent.
 
 ---
 
 ## Project Stats
 
 - ~1.3 k lines of HTML, CSS, and JavaScript  
-- Built‑in skills: 12  
-- Recognised commands: 50 + (see `skills/`)  
+- 12 built‑in skills  
+- 50+ recognised commands (see `skills/`)  
 - Average response time: < 200 ms  
 
 ---
@@ -108,9 +96,9 @@ Because it relies on the Web Speech API, it works in any browser that supports s
 
 | Date | Change |
 |------|--------|
-| **2026‑09‑07** | README cleanup, added contribution guidelines. |
-| **2026‑09‑04** | Minor wording improvements. |
-| **2026‑08‑21** | Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %. |
+| 2026‑09‑07 | README cleanup, added contribution guidelines. |
+| 2026‑09‑04 | Minor wording improvements. |
+| 2026‑08‑21 | Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %. |
 
 ---
 
