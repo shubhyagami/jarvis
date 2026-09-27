@@ -1,7 +1,8 @@
+[K[2m  [2mmodel z-ai/glm-5.3-flash failed, trying next...[0m[0m
 [K[2m  [2mmodel deepseek-ai/deepseek-v4.1-flash failed, trying next...[0m[0m
 # JARVIS – Browser‑Based AI Assistant
 
-JARVIS is a lightweight, pure‑client web app that turns a modern browser into a voice‑controlled AI assistant.  
+JARVIS is a lightweight pure‑client web app that turns a modern browser into a voice‑controlled AI assistant.  
 Everything runs **entirely in the browser** – no server, no build step, no external dependencies.
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)  
@@ -17,16 +18,15 @@ Everything runs **entirely in the browser** – no server, no build step, no ext
 ## Quick Start
 
 > **Important:** Modern browsers require HTTPS for microphone access.  
-> If you run the app locally, use a local server (e.g., `python -m http.server`) or use `serve` from npm.
+> If you run the app locally, start a local server (e.g., `python -m http.server` or `npx serve`).
 
-```bash
+```
 git clone https://github.com/shubhyagami/jarvis.git
 cd jarvis
-# Open a local server
 python -m http.server   # or npx serve
 ```
 
-Open the address in your browser, grant microphone permission, and say the wake word **“Hey JARVIS”** (configurable in `config.js`).
+Open the resulting URL in your browser, grant microphone permission, and speak the wake word **“Hey JARVIS”** (configurable in `config.js`).
 
 ---
 
@@ -37,30 +37,30 @@ Supported browsers: Chrome ≥ 49, Edge ≥ 79, Firefox ≥ 52, Safa
 
 ---
 
-## Key Features
+## Features
 
-- **Zero‑setup** – launch directly from `index.html` or any static server.
-- **Native Web Speech** – no external API calls; all recognition and synthesis run in the browser.
-- **Modular skill system** – add or remove features by placing files in the `skills/` folder.
-- **Live UI** – neon HUD, animated waveform, and an animated avatar.
-- **Configurable** – adjust wake word, colors, avatar, voice, and more in `config.js`.
+- **Zero‑setup** – launch from `index.html` or any static server.  
+- **Native Web Speech** – all recognition and synthesis run in the browser.  
+- **Modular skill system** – add or remove features by placing files in the `skills/` folder.  
+- **Live UI** – neon HUD, animated waveform, and an animated avatar.  
+- **Configurable** – tweak wake word, colors, avatar, voice, and more in `config.js`.
 
 ---
 
-## Customisation
+## Configuration
 
-| Setting | File / Location | Example |
-|---------|-----------------|---------|
-| Wake word | `config.js` | `wakeWord: "Hey JARVIS"` |
-| Primary colour | `config.js` | `primaryColor: "#0bd"` |
-| Avatar image | `assets/avatars/` | Replace `avatar.png` |
-| Voice feedback | UI Settings | Toggle “Speak response” |
+| Setting          | Location            | Example                          |
+|------------------|---------------------|----------------------------------|
+| Wake word        | `config.js`         | `wakeWord: "Hey JARVIS"`         |
+| Primary colour   | `config.js`         | `primaryColor: "#0bd"`          |
+| Avatar image     | `assets/avatars/`   | Replace `avatar.png`             |
+| Voice feedback  | UI Settings panel   | Toggle “Speak response”         |
 
 ---
 
 ## Adding a New Skill
 
-1. Create `skills/yourSkill.js`.
+1. Create `skills/yourSkill.js`.  
 2. Export a `run(state, command)` function that returns a promise resolved with a string or an `HTMLElement`.
 
 ```js
@@ -70,13 +70,13 @@ export function run(state, command) {
 }
 ```
 
-3. Reload the app; the new skill will be available automatically.
+3. Reload the app; the new skill becomes available automatically.
 
 ---
 
 ## Contributing
 
-1. Fork the repo.  
+1. Fork the repository.  
 2. Create a feature branch: `git checkout -b feature/...`.  
 3. Commit, push, and open a pull request against `main`.  
 4. Run the linter (`npm run lint`) before submitting to keep code style consistent.
@@ -94,11 +94,11 @@ export function run(state, command) {
 
 ## Changelog
 
-| Date | Change |
-|------|--------|
-| 2026‑09‑07 | README cleanup, added contribution guidelines. |
-| 2026‑09‑04 | Minor wording improvements. |
-| 2026‑08‑21 | Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %. |
+| Date        | Change |
+|-------------|--------|
+| 2026‑09‑07  | README cleanup, added contribution guidelines. |
+| 2026‑09‑04  | Minor wording improvements. |
+| 2026‑08‑21  | Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %. |
 
 ---
 
