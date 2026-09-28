@@ -2,7 +2,7 @@
 [K[2m  [2mmodel deepseek-ai/deepseek-v4.1-flash failed, trying next...[0m[0m
 # JARVIS – Browser‑Based AI Assistant
 
-JARVIS is a lightweight pure‑client web app that turns a modern browser into a voice‑controlled AI assistant.  
+JARVIS is a lightweight, pure‑client web application that turns a modern browser into a voice‑controlled AI assistant.  
 Everything runs **entirely in the browser** – no server, no build step, no external dependencies.
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)  
@@ -15,46 +15,45 @@ Everything runs **entirely in the browser** – no server, no build step, no ext
 
 ---
 
+## Features
+
+- **Zero‑setup** – open `index.html` or host it on any static server.  
+- **Native Web Speech** – all speech recognition and synthesis are handled by the browser.  
+- **Modular skill system** – add or remove functionality by adding JavaScript files to `skills/`.  
+- **Live UI** – neon HUD, animated waveform, and an animated avatar.  
+- **Fully configurable** – tweak wake word, colours, avatar, voice, and more in `config.js`.
+
+---
+
 ## Quick Start
 
-> **Important:** Modern browsers require HTTPS for microphone access.  
-> If you run the app locally, start a local server (e.g., `python -m http.server` or `npx serve`).
+> Modern browsers require HTTPS for microphone access.  
+> If you run locally, start a local server (e.g., `python -m http.server` or `npx serve`).
 
-```
+```bash
 git clone https://github.com/shubhyagami/jarvis.git
 cd jarvis
 python -m http.server   # or npx serve
 ```
 
-Open the resulting URL in your browser, grant microphone permission, and speak the wake word **“Hey JARVIS”** (configurable in `config.js`).
+Open the local URL in your browser, grant microphone permission, and speak the wake word **“Hey JARVIS”** (configurable in `config.js`).
 
 ---
 
 ## How It Works
 
-JARVIS listens for voice commands via the Web Speech API, processes them locally, and responds audibly or visually.  
-Supported browsers: Chrome ≥ 49, Edge ≥ 79, Firefox ≥ 52, Safari ≥ 10.1.
-
----
-
-## Features
-
-- **Zero‑setup** – launch from `index.html` or any static server.  
-- **Native Web Speech** – all recognition and synthesis run in the browser.  
-- **Modular skill system** – add or remove features by placing files in the `skills/` folder.  
-- **Live UI** – neon HUD, animated waveform, and an animated avatar.  
-- **Configurable** – tweak wake word, colors, avatar, voice, and more in `config.js`.
+JARVIS listens to your voice through the Web Speech API. Once it detects the wake word, it parses the following command, matches it against the available skills, executes the corresponding code, and returns a spoken or visual response. Supported browsers: Chrome ≥ 49, Edge ≥ 79, Firefox ≥ 52, Safari ≥ 10.1.
 
 ---
 
 ## Configuration
 
-| Setting          | Location            | Example                          |
-|------------------|---------------------|----------------------------------|
-| Wake word        | `config.js`         | `wakeWord: "Hey JARVIS"`         |
-| Primary colour   | `config.js`         | `primaryColor: "#0bd"`          |
-| Avatar image     | `assets/avatars/`   | Replace `avatar.png`             |
-| Voice feedback  | UI Settings panel   | Toggle “Speak response”         |
+| Setting | File | Example |
+|---------|------|----------|
+| Wake word | `config.js` | `wakeWord: "Hey JARVIS"` |
+| Primary colour | `config.js` | `primaryColor: "#0bd"` |
+| Avatar image | `assets/avatars/` | Replace `avatar.png` |
+| Voice feedback | UI Settings panel | Toggle “Speak response” |
 
 ---
 
@@ -79,7 +78,9 @@ export function run(state, command) {
 1. Fork the repository.  
 2. Create a feature branch: `git checkout -b feature/...`.  
 3. Commit, push, and open a pull request against `main`.  
-4. Run the linter (`npm run lint`) before submitting to keep code style consistent.
+4. Run the linter (`npm run lint`) before submitting.
+
+Pull requests that enhance documentation, add new skills, or refactor existing code are welcome.
 
 ---
 
@@ -87,18 +88,18 @@ export function run(state, command) {
 
 - ~1.3 k lines of HTML, CSS, and JavaScript  
 - 12 built‑in skills  
-- 50+ recognised commands (see `skills/`)  
+- 50+ recognised commands (`skills/`)  
 - Average response time: < 200 ms  
 
 ---
 
 ## Changelog
 
-| Date        | Change |
-|-------------|--------|
-| 2026‑09‑07  | README cleanup, added contribution guidelines. |
-| 2026‑09‑04  | Minor wording improvements. |
-| 2026‑08‑21  | Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %. |
+| Date | Change |
+|------|--------|
+| 2026‑09‑07 | README cleanup, added contribution guidelines. |
+| 2026‑09‑04 | Minor wording improvements. |
+| 2026‑08‑21 | Added live weather command; fixed mobile UI overlap; reduced memory usage by 15 %. |
 
 ---
 
